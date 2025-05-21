@@ -12,6 +12,7 @@ func cleanInput(text string) []string {
 }
 
 func pokerepl() {
+	config := Config{}
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex > ")
@@ -22,9 +23,20 @@ func pokerepl() {
 		if !ok {
 			fmt.Println("Unknown command")
 		} else {
-			command.callback()
+			command.callback(&config)
 		}
 	}
+}
+
+type Config struct {
+	Next     string
+	Previous string
+}
+
+type cliCommand struct {
+	name        string
+	description string
+	callback    func(*Config) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -38,6 +50,16 @@ func getCommands() map[string]cliCommand {
 			name:        "exit",
 			description: "Exit the Pokedex",
 			callback:    commandExit,
+		},
+		"map": {
+			name:        "map",
+			description: "displays 20 location areas",
+			callback:    commandMap,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "displays  previous 20 location areas",
+			callback:    commandMapb,
 		},
 	}
 }

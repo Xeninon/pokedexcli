@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func commandHelp() error {
+func commandHelp(c *Config) error {
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
 	fmt.Println("")
@@ -15,14 +15,8 @@ func commandHelp() error {
 	return nil
 }
 
-func commandExit() error {
+func commandExit(c *Config) error {
 	fmt.Println("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 	return nil
-}
-
-type cliCommand struct {
-	name        string
-	description string
-	callback    func() error
 }
