@@ -22,3 +22,12 @@ func commandExit(c *Config, ca *pokecache.Cache, p map[string]Pokeinfo, s string
 	os.Exit(0)
 	return nil
 }
+
+func commandPokedex(c *Config, ca *pokecache.Cache, pokedex map[string]Pokeinfo, s string) error {
+	fmt.Println("Your Pokedex:")
+	for pokemon, _ := range pokedex {
+		fmt.Println(" - ", pokemon)
+	}
+
+	return nil
+}
