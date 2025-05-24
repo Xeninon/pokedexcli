@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
+
+	"github.com/Xeninon/pokedexcli/internal/pokecache"
 )
 
 func cleanInput(text string) []string {
@@ -14,16 +17,24 @@ func cleanInput(text string) []string {
 func pokerepl() {
 	config := Config{}
 	scanner := bufio.NewScanner(os.Stdin)
+	cache := pokecache.NewCache(5 * time.Second)
 	for {
 		fmt.Print("Pokedex > ")
 		scanner.Scan()
 		text := scanner.Text()
 		clean_text := cleanInput(text)
+		if len(clean_text) == 0 {
+			continue
+		}
+		param := ""
+		if len(clean_text) > 1 {
+			param = clean_text[1]
+		}
 		command, ok := getCommands()[clean_text[0]]
 		if !ok {
 			fmt.Println("Unknown command")
 		} else {
-			command.callback(&config)
+			command.callback(&config, cache, param)
 		}
 	}
 }
@@ -36,7 +47,7 @@ type Config struct {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*Config) error
+	callback    func(*Config, *pokecache.Cache, string) error
 }
 
 func getCommands() map[string]cliCommand {

@@ -3,9 +3,11 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"github.com/Xeninon/pokedexcli/internal/pokecache"
 )
 
-func commandHelp(c *Config) error {
+func commandHelp(c *Config, ca *pokecache.Cache, s string) error {
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
 	fmt.Println("")
@@ -15,7 +17,7 @@ func commandHelp(c *Config) error {
 	return nil
 }
 
-func commandExit(c *Config) error {
+func commandExit(c *Config, ca *pokecache.Cache, s string) error {
 	fmt.Println("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 	return nil
