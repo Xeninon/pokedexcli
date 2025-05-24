@@ -7,7 +7,7 @@ import (
 	"github.com/Xeninon/pokedexcli/internal/pokecache"
 )
 
-func commandHelp(c *Config, ca *pokecache.Cache, s string) error {
+func commandHelp(c *Config, ca *pokecache.Cache, p map[string]Pokeinfo, s string) error {
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
 	fmt.Println("")
@@ -17,7 +17,7 @@ func commandHelp(c *Config, ca *pokecache.Cache, s string) error {
 	return nil
 }
 
-func commandExit(c *Config, ca *pokecache.Cache, s string) error {
+func commandExit(c *Config, ca *pokecache.Cache, p map[string]Pokeinfo, s string) error {
 	fmt.Println("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 	return nil

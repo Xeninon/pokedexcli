@@ -17,7 +17,7 @@ type LocationAreas struct {
 	} `json:"results"`
 }
 
-func commandMap(c *Config, cache *pokecache.Cache, s string) error {
+func commandMap(c *Config, cache *pokecache.Cache, p map[string]Pokeinfo, s string) error {
 	url := "https://pokeapi.co/api/v2/location-area"
 	if c.Next != "" {
 		url = c.Next
@@ -43,7 +43,7 @@ func commandMap(c *Config, cache *pokecache.Cache, s string) error {
 	return nil
 }
 
-func commandMapb(c *Config, cache *pokecache.Cache, s string) error {
+func commandMapb(c *Config, cache *pokecache.Cache, p map[string]Pokeinfo, s string) error {
 	url := c.Previous
 	if url == "" {
 		fmt.Println("you're on the first page")

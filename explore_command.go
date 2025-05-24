@@ -17,7 +17,11 @@ type AreaPokemon struct {
 	} `json:"pokemon_encounters"`
 }
 
-func commandExplore(c *Config, cache *pokecache.Cache, area string) error {
+func commandExplore(c *Config, cache *pokecache.Cache, p map[string]Pokeinfo, area string) error {
+	if area == "" {
+		fmt.Println("area not specified")
+		return nil
+	}
 	url := "https://pokeapi.co/api/v2/location-area/" + area
 
 	body, err := pokeapi.PokeGet(cache, url)

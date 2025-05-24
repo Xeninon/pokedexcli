@@ -11,7 +11,6 @@ import (
 func PokeGet(cache *pokecache.Cache, url string) ([]byte, error) {
 	body, ok := cache.Get(url)
 	if ok {
-		fmt.Println("using cache")
 		return body, nil
 	}
 	res, err := http.Get(url)

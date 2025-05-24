@@ -18,6 +18,7 @@ func pokerepl() {
 	config := Config{}
 	scanner := bufio.NewScanner(os.Stdin)
 	cache := pokecache.NewCache(5 * time.Second)
+	pokedex := make(map[string]Pokeinfo)
 	for {
 		fmt.Print("Pokedex > ")
 		scanner.Scan()
@@ -34,7 +35,10 @@ func pokerepl() {
 		if !ok {
 			fmt.Println("Unknown command")
 		} else {
-			command.callback(&config, cache, param)
+			err := command.callback(&config, cache, pokedex, param)
+			if err != nil {
+				fmt.Println(err)
+			}
 		}
 	}
 }
@@ -47,7 +51,7 @@ type Config struct {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*Config, *pokecache.Cache, string) error
+	callback    func(*Config, *pokecache.Cache, map[string]Pokeinfo, string) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -74,8 +78,13 @@ func getCommands() map[string]cliCommand {
 		},
 		"explore": {
 			name:        "explore",
-			description: "displays pokemon in a given location area (explore location_area)",
+			description: "displays pokemon in a given location area (explore 'location_area')",
 			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "explore",
+			description: "attempt to catch a pokemon (catch 'pokemon')",
+			callback:    commandCatch,
 		},
 	}
 }
